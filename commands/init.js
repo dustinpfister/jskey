@@ -17,28 +17,18 @@ let makeProjectFolder = (dir_project) => {
 
 // make key.yaml
 let makeKeyFile = (dir_project, key) => {
-
     return new Promise((resolve, reject) => {
-
         let data = yaml.safeDump({
                 key: key
             });
-
         fs.writeFile(path.join(dir_project, 'key.yaml'), data, (e) => {
-
             if (e) {
-
                 reject(e);
-
             } else {
-
                 resolve();
             }
-
         });
-
     });
-
 };
 
 // define command
