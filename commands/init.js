@@ -1,6 +1,7 @@
 let path = require('path'),
 yaml = require('js-yaml'),
-fs = require('fs');
+fs = require('fs'),
+simpleC = require('../lib/simple_crypt');
 
 // make the target folder, and error will occur if the folder is there
 let makeProjectFolder = (dir_project) => {
@@ -59,6 +60,13 @@ exports.handler = function (argv) {
 
     }).then(() => {
         console.log('key.yaml cretaed');
+
+        let c = simpleC.crypt('foo'),
+        d = simpleC.decrypt(c);
+
+        console.log(c);
+        console.log(d.toString());
+
     }).catch ((e) => {
 
         console.log(e.message);
