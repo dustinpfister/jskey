@@ -4,7 +4,7 @@ fs = require('fs'),
 simpleC = require('../lib/simple_crypt');
 
 // make the target folder, and error will occur if the folder is there
-let makeProjectFolder = (dir_project) => {
+let makeFolder = (dir_project) => {
     return new Promise((resolve, reject) => {
         fs.mkdir(dir_project, function (e) {
             if (e) {
@@ -50,15 +50,21 @@ exports.builder = {
 };
 exports.handler = function (argv) {
 
-    let dir_target = path.join(process.cwd(), argv.t);
+    let dir_target = path.join(process.cwd(), argv.t),
+    dir_posts_crypt = path.join(dir_target, '_posts_crypt');
 
-    makeProjectFolder(dir_target).then(() => {
+    makeFolder(dir_target).then(() => {
 
         console.log('target folder ' + argv.t + 'created at: ');
         console.log(dir_target);
         return makeKeyFile(dir_target, argv.k);
 
     }).then(() => {
+
+        return makeFolder(dir_posts_crypt);
+
+    }).then(() => {
+
         console.log('key.yaml cretaed');
 
         let c = simpleC.crypt('foo'),
