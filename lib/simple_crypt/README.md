@@ -19,6 +19,8 @@ console.log(d.toString());
 
 ## Make sure to be aware of encoding
 
+If the encoding is to be stored in a file it should be stored as hex
+
 ```js
 let simpC = require('./index.js');
  
@@ -27,13 +29,15 @@ let opt = {
     random: 'project2501'
 };
  
-let c = simpC.crypt('foo',opt);
+let c = simpC.crypt('foo', opt);
  
 console.log(c);
 console.log(c.toString('hex'));
-console.log(Buffer.from(c.toString('hex'),'hex'));
+console.log(Buffer.from(c.toString('hex'), 'hex'));
  
-d = simpC.decrypt(Buffer.from(c.toString('hex'),'hex'),opt);
+d = simpC.decrypt(Buffer.from(c.toString('hex'), 'hex'), opt);
  
 console.log(d.toString('ascii')); // 'foo'
+console.log(simpC.fromHex(c.toString('hex'), opt).toString('ascii')); // 'foo'
+console.log(simpC.fromHex(simpC.toHex('foo', opt), opt).toString('ascii')); // 'foo'
 ```
