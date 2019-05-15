@@ -32,6 +32,24 @@ let makeKeyFile = (dir_project, key) => {
     });
 };
 
+// make first post
+let makeFirstPost = function (dir, opt_crypt) {
+    return new Promise((resolve, reject) => {
+        fs.readFile('../README.md', 'utf8', (e, text) => {
+            if (e) {
+                text = 'first post file not found';
+            }
+            fs.writeFile(path.join(dir, '0.md'), simpleC.toHex(text, opt_crypt), (e) => {
+                if (e) {
+                    reject(e);
+                } else {
+                    resolve();
+                }
+            });
+        })
+    });
+};
+
 // define command
 exports.command = 'init';
 exports.aliases = ['i'];
@@ -54,24 +72,25 @@ exports.handler = function (argv) {
     dir_posts_crypt = path.join(dir_target, '_posts_crypt');
 
     makeFolder(dir_target).then(() => {
-
         console.log('target folder ' + argv.t + 'created at: ');
         console.log(dir_target);
         return makeKeyFile(dir_target, argv.k);
-
     }).then(() => {
-
         return makeFolder(dir_posts_crypt);
-
+    }).then(() => {
+        return makeFirstPost(dir_posts_crypt, {
+            password: argv.k
+        });
     }).then(() => {
 
-        console.log('key.yaml cretaed');
+        console.log('setup compleate!');
+        //console.log('key.yaml cretaed');
 
-        let c = simpleC.crypt('foo'),
-        d = simpleC.decrypt(c);
+        //let c = simpleC.crypt('foo'),
+        //d = simpleC.decrypt(c);
 
-        console.log(c);
-        console.log(d.toString());
+        //console.log(c);
+        //console.log(d.toString());
 
     }).catch ((e) => {
 
