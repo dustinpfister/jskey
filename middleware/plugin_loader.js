@@ -10,7 +10,16 @@ let getPluginList = (dir_plugins) => {
             }
         });
     });
+};
 
+// get actions from a list of plugins
+let getActions = (dir_plugins, plugins)=>{
+	
+	return new Promise((resolve,reject)=>{
+		
+		
+	});
+	
 };
 
 module.exports = (opt) => {
