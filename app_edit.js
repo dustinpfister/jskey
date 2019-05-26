@@ -1,4 +1,5 @@
 let express = require('express'),
+path = require('path'),
 app = express();
 
 app.set('port', 8000);
@@ -7,8 +8,17 @@ app.set('key', '1234');
 app.set('views', './views');
 app.set('view engine', 'ejs');
 
+// static assets
 app.use('/js', express.static('./public/js'))
 
+// load plugins
+app.use('/plugin', require('./middleware/plugin_loader.js')({
+        dir_plugins: path.resolve('./plugins')
+    }));
+
+//console.log(require('./middleware/plugin_loader.js'));
+
+// root path
 app.get('/', (req, res) => {
     res.render('index', {
         key: app.get('key')
