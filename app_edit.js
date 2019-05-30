@@ -16,8 +16,6 @@ app.use('/plugin', require('./middleware/plugin_loader.js')({
         dir_plugins: path.resolve('./plugins')
     }));
 
-//console.log(require('./middleware/plugin_loader.js'));
-
 // root path
 app.get('/', (req, res) => {
     res.render('index', {
@@ -25,14 +23,6 @@ app.get('/', (req, res) => {
     });
 });
 
-/*
-app.get('/', (req, res) => {
-let html =
-'<h1>Editor:</h1>'+
-'<p>key: ' + app.get('key') + '<\/p>';
-res.send(html);
-});
- */
 
 exports.listen = (opt) => {
     opt = opt || {};
