@@ -13,31 +13,32 @@ let getDirList = (dir) => {
     });
 };
 
-// get actions from a list of plugins
-let getActionsList = (dir_plugins) => {
+// get list of objects for each plugin
+let getPluginList = (dir_plugins) => {
+
+    let mapPlugins = (plugins) => {
+
+        return plugins.map((pluginName) => {
+
+            let dir_actions = path.join(dir_plugins, pluginName, 'actions');
+
+            return getDirList(dir_actions)
+            .then((actions) => {
+                return {
+                    pluginName: pluginName,
+                    actionFiles: actions.map((actionFile) => {
+                        return path.join(dir_actions, actionFile);
+                    })
+                };
+            });
+
+        })
+    };
 
     return getDirList(dir_plugins)
-
     .then((plugins) => {
-
-        return Promise.all(plugins.map((pluginName) => {
-
-                let dir_actions = path.join(dir_plugins, pluginName, 'actions');
-
-                return getDirList(dir_actions).then((actions) => {
-
-                    return actions.map((actionFile) => {
-
-                        return path.join(dir_actions, actionFile);
-
-                    });
-
-                });
-
-            }));
-
+        return Promise.all(mapPlugins(plugins));
     });
-
 };
 
 module.exports = (opt) => {
@@ -45,7 +46,7 @@ module.exports = (opt) => {
     opt = opt || {};
     opt.dir_plugins = opt.dir_plugins || './plugins';
 
-    getActionsList(opt.dir_plugins)
+    getPluginList(opt.dir_plugins)
     .then((actions) => {
 
         console.log(actions);
