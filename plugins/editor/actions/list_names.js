@@ -1,6 +1,10 @@
 module.exports = (req, res, next) => {
-    res.json({
-        action: 'list_names',
-        names: 'foo'
-    });
+    if (req.body.action === 'foo') {
+        res.json({
+            action: 'list_names',
+            names: 'foo'
+        });
+    } else {
+        next();
+    }
 };

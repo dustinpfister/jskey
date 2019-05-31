@@ -43,15 +43,26 @@ let setPathsForActions = (pluginObjectList, router) => {
 
     pluginObjectList.forEach((pluginObject) => {
 
-        //console.log(pluginObject);
-
+        // actions path
+        let actions = [(req, res, next) => {
+                req.body = req.body || {
+                    action: 'bar'
+                };
+                next();
+            }
+        ];
         pluginObject.actionFiles.forEach((actionFile) => {
-
-            router.use('/' + pluginObject.pluginName, require(actionFile));
-
-            console.log(pluginObject.pluginName + ' loaded');
-
+            //router.use('/' + pluginObject.pluginName + '/action', require(actionFile));
+            actions.push(require(actionFile));
         });
+        actions.push((req, res) => {
+            res.json({
+                mess: 'unkown action'
+            });
+        });
+        router.use('/' + pluginObject.pluginName + '/action', actions);
+
+        console.log(pluginObject.pluginName + ' loaded');
 
     });
 
