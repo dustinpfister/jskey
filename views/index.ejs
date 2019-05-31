@@ -5,6 +5,13 @@
   <body>
      <h1>jsKey</h1>
      <p>key: <%= key %></p>
+
+     <div>
+     <% plugins.forEach((plugin)=>{ %>
+       <div><%= plugin.pluginName %></div>
+     <% }); %>
+     </div>
+
      <script src="/js/vuejs/2.6.10/vue.js"></script>
   </body>
 </html>

@@ -72,11 +72,15 @@ module.exports = (opt) => {
 
     opt = opt || {};
     opt.dir_plugins = opt.dir_plugins || './plugins';
+    opt.app_main = opt.app_main || express();
 
     getPluginObjectList(opt.dir_plugins)
     .then((pluginObjectList) => {
 
         setPathsForActions(pluginObjectList, router);
+
+        opt.app_main.set('plugins', pluginObjectList);
+
         //console.log(pluginList);
 
     });

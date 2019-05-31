@@ -13,16 +13,17 @@ app.use('/js', express.static('./public/js'))
 
 // load plugins
 app.use('/plugin', require('./middleware/plugin_loader.js')({
-        dir_plugins: path.resolve('./plugins')
+        dir_plugins: path.resolve('./plugins'),
+        app_main: app
     }));
 
 // root path
 app.get('/', (req, res) => {
     res.render('index', {
-        key: app.get('key')
+        key: app.get('key'),
+        plugins: app.get('plugins')
     });
 });
-
 
 exports.listen = (opt) => {
     opt = opt || {};
