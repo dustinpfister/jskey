@@ -40,9 +40,7 @@ let getPluginObjectList = (dir_plugins) => {
 // set up paths for actions in the given pluginObjectList
 // in the given router
 let setPathsForActions = (pluginObjectList, router) => {
-
     pluginObjectList.forEach((pluginObject) => {
-
         // actions path
         let actions = [(req, res, next) => {
                 req.body = req.body || {
@@ -61,9 +59,7 @@ let setPathsForActions = (pluginObjectList, router) => {
             });
         });
         router.use('/' + pluginObject.pluginName + '/action', actions);
-
-        console.log(pluginObject.pluginName + ' loaded');
-
+        console.log(pluginObject.pluginName + ' actions loaded');
     });
 
 };
@@ -77,7 +73,18 @@ module.exports = (opt) => {
     getPluginObjectList(opt.dir_plugins)
     .then((pluginObjectList) => {
 
+        // action paths for each plugin
         setPathsForActions(pluginObjectList, router);
+
+        // root path
+        router.use('/', (req, res) => {
+            res.json({
+                mess: 'plugin root path',
+                pluginNames: pluginObjectList.map((plugin) => {
+                    return plugin.pluginName;
+                })
+            });
+        });
 
         opt.app_main.set('plugins', pluginObjectList);
         opt.app_main.set('plugins_current', pluginObjectList[0].pluginName);
