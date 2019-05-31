@@ -6,9 +6,14 @@
      <h1>jsKey</h1>
      <div id="vue-header"><p>loading header</p></div>
 
-
      <script src="/js/vuejs/2.6.10/vue.js"></script>
      <script src="/js/client/http.js"></script>
+
+     <!-- load containers -->
+     <% plugins.forEach((plugin)=>{ %>
+     <script src="/plugin/<%= plugin.pluginName %>/js/container.js"></script>
+     <% }); %>
+
      <script src="/js/client/vuejs_header.js"></script>
   </body>
 </html>
