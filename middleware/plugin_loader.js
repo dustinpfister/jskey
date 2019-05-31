@@ -80,6 +80,7 @@ module.exports = (opt) => {
         setPathsForActions(pluginObjectList, router);
 
         opt.app_main.set('plugins', pluginObjectList);
+        opt.app_main.set('plugins_current', pluginObjectList[0].pluginName);
 
         //console.log(pluginList);
 

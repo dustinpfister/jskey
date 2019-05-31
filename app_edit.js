@@ -21,7 +21,8 @@ app.use('/plugin', require('./middleware/plugin_loader.js')({
 app.get('/', (req, res) => {
     res.render('index', {
         key: app.get('key'),
-        plugins: app.get('plugins')
+        plugins: app.get('plugins'),
+        pluginCurrent: app.get('plugins_current')
     });
 });
 
