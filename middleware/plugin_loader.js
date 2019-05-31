@@ -61,7 +61,15 @@ let setPathsForActions = (pluginObjectList, router) => {
         router.use('/' + pluginObject.pluginName + '/action', actions);
         console.log(pluginObject.pluginName + ' actions loaded');
     });
+};
 
+// create static js paths for each plugin
+let setJavaScriptPaths = (dir_plugins, pluginObjectList, router) => {
+    pluginObjectList.forEach((pluginObject) => {
+        let dir_pluginjs = path.join(dir_plugins, pluginObject.pluginName, 'js'),
+        mountPoint = '/' + pluginObject.pluginName + '/js';
+        router.use(mountPoint, express.static(dir_pluginjs));
+    });
 };
 
 module.exports = (opt) => {
@@ -75,6 +83,8 @@ module.exports = (opt) => {
 
         // action paths for each plugin
         setPathsForActions(pluginObjectList, router);
+
+        setJavaScriptPaths(opt.dir_plugins, pluginObjectList, router);
 
         // root path
         router.use('/', (req, res) => {

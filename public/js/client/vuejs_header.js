@@ -19,14 +19,10 @@ new Vue({
     },
 
     methods: {
-
         // when a plugin tab is clicked
         clickTab: function (e) {
-
             console.log(e.target.value);
-
         }
-
     }
 
 });
