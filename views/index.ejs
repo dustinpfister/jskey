@@ -9,11 +9,19 @@
      <script src="/js/vuejs/2.6.10/vue.js"></script>
      <script src="/js/client/http.js"></script>
 
+
+     <p>Current Plugin: <%= pluginCurrent %></p>
+     <hr>
+ 
+    <div id="viewer">
+         <h1>VIEW</h1>
+         <container-<%= pluginCurrent %>></container-<%= pluginCurrent %>>
+    </div>
+
      <!-- load containers -->
      <% plugins.forEach((plugin)=>{ %>
-     <script src="/plugin/<%= plugin.pluginName %>/js/container.js"></script>
+       <script src="/plugin/<%= plugin.pluginName %>/js/container.js"></script>
      <% }); %>
-
      <script src="/js/client/vuejs_header.js"></script>
   </body>
 </html>
